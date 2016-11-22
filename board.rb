@@ -48,7 +48,7 @@ class Board
   end
 
   def move_piece(color, from_pos, to_pos)
-
+    # i9r <- this is duplicate right?
   end
 
   def move_piece!(from_pos, to_pos)
