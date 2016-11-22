@@ -36,7 +36,7 @@ class Cursor
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
-    @board = board
+    #@board = board
   end
 
   def get_input
@@ -76,8 +76,16 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+    when :up
+
+    when :down
+    when :left
+    when :right
+    when :escape
   end
 
   def update_pos(diff)
+
   end
 end

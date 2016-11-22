@@ -13,17 +13,17 @@ class Board
 
   def set_board
     # 8.times do |pwn|
-    #   self[pwn, 1] = Pawn.new(black)
+    # self[pwn, 1] = Pawn.new(black)
     #   self[pwn, 6] = Pawn.new(white)
     # end
     #self[0, 7], self[7, 7] = Rook.new(white)
-    self[[0, 0]] = Rook.new("black", [0, 0])
-    self[[7, 0]] = Rook.new("black", [7, 0])
+    # self[[2, 2]] = Rook.new("black", [2, 2])
+    self[[0, 7]] = Rook.new("black", [0, 7])
     #self[1, 7], self[6, 7] = Knight.new(white)
     #self[1, 0], self[6, 0] = Knight.new(black)
     #self[2, 7], self[5, 7] = Bishop.new(white)
     #self[2, 0], self[5, 0] = Bishop.new(black)
-    self[[3, 7]] = King.new("white", [3, 7])
+    self[[7, 0]] = King.new("white", [7, 0])
     #self[4, 7] = Queen.new(white)
     #self[3, 0] = King.new(black)
     #self[4, 0] = Queen.new(black)
@@ -34,12 +34,12 @@ class Board
   end
 
   def [](pos)
-    x, y = pos[0], pos[1]
+    x, y = pos[1], pos[0]
     grid[x][y]
   end
 
   def []=(pos, piece)
-    x, y = pos[0], pos[1]
+    x, y = pos[1], pos[0]
     grid[x][y] = piece
   end
 
