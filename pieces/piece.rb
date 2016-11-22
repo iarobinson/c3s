@@ -1,7 +1,9 @@
 class Piece
+  attr_accessor :current_pos
 
-  def initialize
-
+  def initialize(color, pos)
+    @color = color
+    @current_pos = pos
   end
 
   def to_s
