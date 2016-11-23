@@ -1,4 +1,5 @@
 require "io/console"
+require 'byebug'
 
 KEYMAP = {
   " " => :space,
@@ -24,19 +25,21 @@ KEYMAP = {
 }
 
 MOVES = {
-  left: [0, -1],
-  right: [0, 1],
-  up: [-1, 0],
-  down: [1, 0]
+  left: [-1, 0],
+  right: [1, 0],
+  up: [0, -1],
+  down: [0, 1]
 }
 
 class Cursor
 
-  attr_reader :cursor_pos, :board
+  attr_reader :cursor_pos, :board, :selected, :selected_pos, :destination_point
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
-    #@board = board
+    @selected_pos = nil # I think this should be our variable
+    @board = board
+    @destination_point = nil # I think we should delete this
   end
 
   def get_input
@@ -72,20 +75,56 @@ class Cursor
     STDIN.echo = true # the console prints return values again
     STDIN.cooked! # the opposite of raw mode :)
 
-    return input
+    input
   end
 
   def handle_key(key)
     case key
-    when :up
+    when :return
+      toggle_selected(@cursor_pos)
+      destination_point(@selected_pos, @destination_point)
+      @cursor_pos #returns current position
+    when :space
+      toggle_selected(@cursor_pos)
+      @cursor_pos #returns current position
+    when :ctrl_c
+      Process.exit(0) #Will exit game and return you to normal terminal input.
+    when :up, :down, :left, :right
+      if within_range?(MOVES[key])
+        update_pos(MOVES[key])
+      end
 
-    when :down
-    when :left
-    when :right
-    when :escape
+      return nil
+    end
+  end
+
+  def within_range?(diff)
+    new_x = @cursor_pos[0] + diff[0]
+    new_y = @cursor_pos[1] + diff[1]
+    return true if new_x.between?(0, 7) && new_y.between?(0, 7)
+    false
   end
 
   def update_pos(diff)
+    @cursor_pos[0] += diff[0]
+    @cursor_pos[1] += diff[1]
+  end
 
+# ## this will call select data
+#   def select_data # This will send selection data to board
+#     # @selected_pos
+#   end
+
+  def destination_point(pos, destination_point) ## I think we should delete this
+    board.move_piece!(@selected_pos, @destination_point)
+  end
+
+  def toggle_selected(pos) # I think we should delete this
+    # debugger
+    if @selected_pos
+      @selected_pos = nil
+    else
+      @selected_pos = pos.dup
+    end
   end
 end

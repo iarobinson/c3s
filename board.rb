@@ -1,6 +1,5 @@
 require_relative 'pieces/king'
 require_relative 'pieces/rook'
-require_relative 'display'
 
 class Board
   attr_reader :grid
@@ -8,7 +7,6 @@ class Board
   def initialize
     @grid = self.class.create_grid
     set_board
-    @new_display = Display.new(self)
   end
 
   def set_board
@@ -18,12 +16,12 @@ class Board
     # end
     #self[0, 7], self[7, 7] = Rook.new(white)
     # self[[2, 2]] = Rook.new("black", [2, 2])
-    self[[0, 7]] = Rook.new("black", [0, 7])
-    #self[1, 7], self[6, 7] = Knight.new(white)
-    #self[1, 0], self[6, 0] = Knight.new(black)
-    #self[2, 7], self[5, 7] = Bishop.new(white)
-    #self[2, 0], self[5, 0] = Bishop.new(black)
-    self[[7, 0]] = King.new("white", [7, 0])
+    # self[[0, 7]] = Rook.new("black", [0, 7])
+    # self[[1, 7]] = Knight.new("white", [1, 7])
+    # self[[1, 0]] = Knight.new("black", [1, 7])
+    # self[[2, 7]] = Bishop.new("white", [1, 7])
+    # self[[2, 0]] = Bishop.new("black", [1, 7])
+    self[[0, 0]] = King.new("white", [0, 0])
     #self[4, 7] = Queen.new(white)
     #self[3, 0] = King.new(black)
     #self[4, 0] = Queen.new(black)
@@ -43,9 +41,6 @@ class Board
     grid[x][y] = piece
   end
 
-  def dup
-
-  end
 
   def move_piece(color, from_pos, to_pos)
     # i9r <- this is duplicate right?
@@ -53,10 +48,6 @@ class Board
 
   def move_piece!(from_pos, to_pos)
     self[from_pos], self[to_pos] = self[to_pos], self[from_pos]
-  end
-
-  def render
-    @new_display.render(self)
   end
 
   def checkmate?
@@ -69,8 +60,8 @@ class Board
 
 end
 
-if $0 == __FILE__
-  board = Board.new
-  board.render
-  board[[3,7]].pos
-end
+# if $0 == __FILE__
+#   board = Board.new
+#   board.render
+#   board[[3,7]].pos
+# end
